@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { church } from '../data/church';
+
+const updatedAt = '21 de julio de 2026';
+---
+
+<Layout
+  title={`Política de Privacidad — ${church.name}`}
+  description={`Política de privacidad del sitio web de la ${church.fullName}.`}
+  ogDescription={`Aviso de privacidad de la ${church.name}.`}
+>
+  <Header solid />
+  <main class="bg-slate-50 pt-16 sm:pt-[4.5rem]">
+    <section class="section-pad">
+      <div class="container-page mx-auto max-w-3xl">
+        <p class="section-kicker !justify-start">
+          Legal
+        </p>
+        <h1 class="section-title mb-3">
+          Política de Privacidad
+        </h1>
+        <p class="mb-8 text-sm text-slate-600 sm:mb-10 sm:text-base">
+          Última actualización: {updatedAt}
+        </p>
+
+        <article class="space-y-6 rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:space-y-8 sm:p-6 md:p-10">
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">1. Quiénes somos</h2>
+            <p class="leading-relaxed text-slate-600">
+              El presente sitio web pertenece a la <strong class="font-semibold text-slate-800">{church.fullName}</strong>,
+              congregación <strong class="font-semibold text-slate-800">{church.name}</strong>, ubicada en {church.address}.
+              Este aviso explica cómo tratamos la información cuando visitas nuestra página.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">2. Qué información recopilamos</h2>
+            <p class="mb-3 leading-relaxed text-slate-600">
+              Este sitio es principalmente informativo. No solicitamos registro de usuarios ni formularios de datos personales en la web.
+            </p>
+            <ul class="list-disc space-y-2 pl-5 text-slate-600">
+              <li>
+                <strong class="font-semibold text-slate-800">Contacto por WhatsApp:</strong> si nos escribes mediante el botón de WhatsApp,
+                la conversación se realiza en la plataforma de Meta/WhatsApp según sus propias condiciones y políticas.
+              </li>
+              <li>
+                <strong class="font-semibold text-slate-800">Datos técnicos básicos:</strong> el servidor de alojamiento puede registrar de forma automática
+                información técnica habitual (por ejemplo, dirección IP, tipo de navegador o fecha de acceso) para seguridad y funcionamiento del sitio.
+              </li>
+              <li>
+                <strong class="font-semibold text-slate-800">Enlaces externos:</strong> al visitar redes sociales, Google Maps o sitios de la Iglesia Adventista,
+                esas plataformas aplican sus propias políticas de privacidad.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">3. Para qué usamos la información</h2>
+            <p class="leading-relaxed text-slate-600">
+              Usamos la información únicamente para mostrar horarios, ubicación y contenidos de la iglesia; responder consultas pastorales o administrativas
+              cuando nos contactas; y mantener el sitio seguro y operativo. No vendemos ni alquilamos datos personales.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">4. Cookies y tecnologías similares</h2>
+            <p class="leading-relaxed text-slate-600">
+              En la medida de lo posible, este sitio no depende de cookies de publicidad ni de seguimiento comercial.
+              Pueden existir cookies técnicas necesarias para el correcto funcionamiento del alojamiento o del navegador.
+              Puedes configurar tu navegador para bloquear o eliminar cookies.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">5. Conservación y seguridad</h2>
+            <p class="leading-relaxed text-slate-600">
+              Conservamos solo la información necesaria para los fines descritos y durante el tiempo razonable para atender consultas o cumplir obligaciones legales.
+              Aplicamos medidas razonables de protección, aunque ningún medio digital es absolutamente seguro.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">6. Derechos de las personas</h2>
+            <p class="leading-relaxed text-slate-600">
+              Si has compartido datos personales con nosotros (por ejemplo, por WhatsApp o de forma presencial) y deseas consultarlos, actualizarlos o solicitar su eliminación,
+              puedes contactarnos por los canales publicados en este sitio. Atenderemos tu solicitud conforme a la normativa aplicable en el Perú.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">7. Menores de edad</h2>
+            <p class="leading-relaxed text-slate-600">
+              El contenido del sitio es apto para familias. Si un menor nos contacta, pedimos que lo haga con acompañamiento o autorización de un padre, madre o tutor.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">8. Cambios a esta política</h2>
+            <p class="leading-relaxed text-slate-600">
+              Podemos actualizar esta Política de Privacidad cuando sea necesario. La fecha de “última actualización” al inicio de esta página indicará la versión vigente.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-3 font-display text-xl font-bold text-slate-900">9. Contacto</h2>
+            <p class="mb-4 leading-relaxed text-slate-600">
+              Para consultas sobre privacidad o el uso de datos relacionados con este sitio web, escríbenos o visítanos:
+            </p>
+            <p class="text-slate-700">
+              <strong class="font-semibold">{church.name}</strong><br />
+              {church.address}
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a class="btn-primary" href="/#ubicacion">Ver ubicación</a>
+              <a class="btn-secondary" href="/">Volver al inicio</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <WhatsAppButton />
+</Layout>

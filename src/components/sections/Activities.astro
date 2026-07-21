@@ -1,0 +1,126 @@
+---
+import { church } from '../../data/church';
+---
+
+<section class="section-pad relative overflow-hidden bg-white" id="actividades">
+  <div class="pointer-events-none absolute top-0 left-1/4 h-96 w-96 rounded-full bg-yellow-300/10 blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-navy/5 blur-3xl" aria-hidden="true"></div>
+
+  <div class="container-page relative">
+    <div class="reveal mx-auto mb-12 max-w-2xl text-center">
+      <p class="section-kicker justify-center">
+        {church.sections.activities.kicker}
+      </p>
+      <h2 class="section-title">
+        {church.sections.activities.title}
+      </h2>
+      <p class="section-lead">
+        {church.sections.activities.lead}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
+      {
+        church.activities.map((activity, index) => (
+          <article
+            class="group surface-card reveal"
+            style={`transition-delay: ${index * 90}ms`}
+            data-activity-card
+          >
+            <div class="h-1.5 w-full bg-gradient-to-r from-navy via-gold to-gold-soft"></div>
+            <div class="flex h-full flex-col p-5 sm:p-6 md:p-8">
+              <div class="mb-5 flex items-start justify-between gap-3 sm:mb-6 sm:gap-4">
+                <div class="min-w-0">
+                  <p class="mb-2 font-ceremony text-[0.65rem] font-semibold tracking-[0.16em] text-gold-deep uppercase sm:text-[0.7rem] sm:tracking-[0.18em]">
+                    {activity.kicker}
+                  </p>
+                  <h3 class="title-gradient font-display text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl">
+                    {activity.name}
+                  </h3>
+                </div>
+                <span
+                  class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-soft to-white font-ceremony text-base font-bold text-gold-deep shadow-sm ring-1 ring-inset ring-gold/20 transition-transform duration-300 group-hover:scale-105 sm:h-14 sm:w-14 sm:text-lg"
+                  aria-hidden="true"
+                >
+                  {activity.name.charAt(0)}
+                </span>
+              </div>
+
+              <div class="mb-5 sm:mb-6">
+                <div class="mb-4 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-slate-100 bg-slate-50 px-3 py-2 sm:px-4">
+                  <span class="text-[0.7rem] font-semibold tracking-wide text-slate-500 uppercase sm:text-xs">{activity.day}</span>
+                  <span class="h-1 w-1 rounded-full bg-gold"></span>
+                  <time class="font-display text-base font-bold text-navy italic sm:text-lg">{activity.time}</time>
+                </div>
+                <p class="text-sm text-slate-600 sm:text-base">
+                  {activity.blurb}
+                </p>
+              </div>
+
+              <div class="activity-panel mt-auto" data-panel aria-hidden="true">
+                <div class="activity-panel__inner">
+                  <div class="rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 ring-1 ring-inset ring-white/60">
+                    <p class="m-0 text-sm leading-relaxed text-slate-600">{activity.purpose}</p>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="mt-5 inline-flex w-full items-center justify-center rounded-full border-2 border-slate-200 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-300 hover:border-navy/30 hover:bg-navy/5 hover:text-navy"
+                data-more
+                aria-expanded="false"
+              >
+                Ver propósito
+              </button>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .activity-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .activity-panel.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  .activity-panel__inner {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.35s ease 0.05s,
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .activity-panel.is-open .activity-panel__inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-activity-card]').forEach((card) => {
+    const btn = card.querySelector('[data-more]');
+    const panel = card.querySelector('[data-panel]');
+    if (!(btn instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      const next = !open;
+
+      btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+      btn.textContent = next ? 'Ver menos' : 'Ver propósito';
+      panel.classList.toggle('is-open', next);
+      panel.setAttribute('aria-hidden', next ? 'false' : 'true');
+    });
+  });
+</script>

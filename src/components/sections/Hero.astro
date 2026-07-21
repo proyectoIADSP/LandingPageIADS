@@ -1,0 +1,393 @@
+---
+import { church } from '../../data/church';
+
+const slides = [
+  {
+    src: '/images/hero/jesus.jpg',
+    label: 'Jesucristo',
+    position: 'center 35%',
+  },
+  {
+    src: '/images/hero/paloma.jpg',
+    label: 'Paloma blanca',
+    position: 'center 40%',
+  },
+  {
+    src: '/images/hero/biblia.jpg',
+    label: 'La Biblia',
+    position: 'center 45%',
+  },
+];
+---
+
+<section class="hero" aria-label="Inicio">
+  <div class="hero__media" aria-hidden="true">
+    <div class="hero__slides" data-hero-slides>
+      {
+        slides.map((slide, index) => (
+          <div class:list={['hero__slide', { 'is-active': index === 0 }]} data-slide={index}>
+            <img
+              src={slide.src}
+              alt=""
+              width="2000"
+              height="1333"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchpriority={index === 0 ? 'high' : 'auto'}
+              style={`object-position: ${slide.position}`}
+            />
+          </div>
+        ))
+      }
+    </div>
+    <div class="hero__veil"></div>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__lockup">
+      <span class="hero__lockup-line">Iglesia</span>
+      <span class="hero__lockup-main">Adventista</span>
+      <span class="hero__lockup-line">del Séptimo Día</span>
+    </div>
+    <h1 class="hero__title">{church.name}</h1>
+    <p class="hero__welcome">{church.tagline}</p>
+    <div class="hero__actions flex flex-wrap justify-center gap-3">
+      <a class="btn-primary" href="#horarios">{church.sections.hero.ctaPrimary}</a>
+      <a class="btn-ghost-light" href="#ubicacion">{church.sections.hero.ctaSecondary}</a>
+    </div>
+
+    <div class="hero__dots" data-hero-dots role="tablist" aria-label="Imágenes de fondo">
+      {
+        slides.map((slide, index) => (
+          <button
+            type="button"
+            class:list={['hero__dot', { 'is-active': index === 0 }]}
+            aria-label={slide.label}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            data-dot={index}
+          />
+        ))
+      }
+    </div>
+  </div>
+
+  <a class="hero__scroll" href="#horarios" aria-label="Ver horarios">
+    <span></span>
+  </a>
+</section>
+
+<script is:inline>
+  (function () {
+    function initHeroCarousel() {
+      const root = document.querySelector('[data-hero-slides]');
+      if (!root || root.dataset.ready === '1') return;
+      root.dataset.ready = '1';
+
+      const slides = Array.from(root.querySelectorAll('.hero__slide'));
+      const dots = Array.from(document.querySelectorAll('[data-hero-dots] .hero__dot'));
+      if (slides.length < 2) return;
+
+      let index = 0;
+      let timer = null;
+
+      function show(next) {
+        index = (next + slides.length) % slides.length;
+        slides.forEach(function (slide, i) {
+          slide.classList.toggle('is-active', i === index);
+        });
+        dots.forEach(function (dot, i) {
+          var active = i === index;
+          dot.classList.toggle('is-active', active);
+          dot.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+      }
+
+      function stop() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      function start() {
+        stop();
+        timer = setInterval(function () {
+          show(index + 1);
+        }, 4000);
+      }
+
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          show(Number(dot.getAttribute('data-dot') || 0));
+          start();
+        });
+      });
+
+      start();
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stop();
+        else start();
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroCarousel);
+    } else {
+      initHeroCarousel();
+    }
+  })();
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: var(--white);
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__slides {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.06);
+    transition:
+      opacity 1s ease,
+      transform 4s ease;
+    pointer-events: none;
+  }
+
+  .hero__slide.is-active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+  }
+
+  .hero__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 35%, transparent 0%, rgba(0, 47, 73, 0.35) 70%),
+      linear-gradient(
+        180deg,
+        rgba(0, 47, 73, 0.5) 0%,
+        rgba(0, 47, 73, 0.38) 42%,
+        rgba(0, 47, 73, 0.82) 100%
+      );
+    z-index: 1;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    width: min(40rem, calc(100% - 2rem));
+    padding: calc(var(--header-h) + 1.25rem) 0 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-width: 640px) {
+    .hero__content {
+      width: min(40rem, calc(100% - 2.5rem));
+      padding: calc(var(--header-h) + 1.5rem) 0 3.5rem;
+    }
+  }
+
+  .hero__lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 0.85rem;
+    animation: rise 0.95s var(--ease) both;
+  }
+
+  .hero__lockup-line {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-ceremony);
+    font-size: clamp(0.72rem, 1.8vw, 0.85rem);
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ochre-soft);
+  }
+
+  .hero__lockup-line::before,
+  .hero__lockup-line::after {
+    content: '';
+    width: 1.4rem;
+    height: 1px;
+    background: var(--ochre);
+  }
+
+  .hero__lockup-main {
+    font-family: var(--font-ceremony);
+    font-size: clamp(1.55rem, 5vw, 2.35rem);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.1;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 7.5vw, 4rem);
+    font-weight: 700;
+    font-variation-settings: 'SOFT' 40, 'WONK' 0.4;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.9rem;
+    background: linear-gradient(90deg, #ffffff 0%, #f5edd8 42%, #cca63a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rise 0.95s 0.08s var(--ease) both;
+  }
+
+  .hero__welcome {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.45;
+    max-width: 20em;
+    margin-bottom: 1.85rem;
+    color: rgba(255, 255, 255, 0.92);
+    animation: rise 0.95s 0.14s var(--ease) both;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    animation: rise 0.95s 0.22s var(--ease) both;
+  }
+
+  .hero__dots {
+    display: flex;
+    gap: 0.55rem;
+    margin-top: 2rem;
+    animation: rise 0.95s 0.3s var(--ease) both;
+  }
+
+  .hero__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition:
+      background 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .hero__dot.is-active {
+    background: var(--ochre);
+    transform: scale(1.25);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 1.4rem;
+    left: 50%;
+    z-index: 3;
+    display: flex;
+    width: 1.5rem;
+    height: 2.35rem;
+    translate: -50% 0;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0.4rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    animation: rise 0.95s 0.4s var(--ease) both;
+  }
+
+  .hero__scroll span {
+    width: 0.28rem;
+    height: 0.28rem;
+    border-radius: 999px;
+    background: var(--ochre-soft);
+    animation: scroll-dot 1.6s ease-in-out infinite;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scroll-dot {
+    0% {
+      opacity: 0.35;
+      transform: translateY(0);
+    }
+    45% {
+      opacity: 1;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 0.2;
+      transform: translateY(14px);
+    }
+  }
+
+  @media (max-width: 639px) {
+    .hero__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero__actions a {
+      width: 100%;
+    }
+
+    .hero__lockup-main {
+      letter-spacing: 0.1em;
+    }
+
+    .hero__scroll {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__slide,
+    .hero__slide img,
+    .hero__scroll span {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>

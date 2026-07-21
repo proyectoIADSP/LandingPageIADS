@@ -1,0 +1,53 @@
+---
+import { church, whatsappLink } from '../data/church';
+---
+
+<footer class="relative overflow-hidden bg-navy-deep text-white">
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -top-20 right-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-24 left-0 h-64 w-64 rounded-full bg-white/5 blur-3xl" aria-hidden="true"></div>
+
+  <div class="container-page relative py-14 md:py-16">
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center">
+      <img
+        class="mb-5 h-16 w-16 rounded-full bg-white object-cover shadow-[0_0_0_4px_rgba(204,166,58,0.35)]"
+        src="/images/logo-iasd-pariachi.png"
+        alt={church.fullName}
+        width="88"
+        height="88"
+      />
+
+      <p class="mb-2 font-ceremony text-xs font-semibold tracking-[0.2em] text-gold-soft uppercase">
+        {church.fullName}
+      </p>
+      <h2 class="mb-3 font-display text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+        {church.name}
+      </h2>
+      <p class="mb-8 max-w-xl font-display text-lg text-white/85 italic">
+        {church.tagline}
+      </p>
+
+      <nav class="mb-8 flex flex-wrap justify-center gap-2" aria-label="Pie de página">
+        <a class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-gold-soft transition hover:bg-white/10 hover:text-white" href="/#horarios">Horarios</a>
+        <a class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-gold-soft transition hover:bg-white/10 hover:text-white" href="/#nosotros">Nosotros</a>
+        <a class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-gold-soft transition hover:bg-white/10 hover:text-white" href="/#familia">Familia</a>
+        <a class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-gold-soft transition hover:bg-white/10 hover:text-white" href="/#actividades">Actividades</a>
+        <a class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-gold-soft transition hover:bg-white/10 hover:text-white" href={church.beliefsUrl} target="_blank" rel="noopener noreferrer">28 creencias</a>
+        <a class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-gold-soft transition hover:bg-white/10 hover:text-white" href={whatsappLink()} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </nav>
+
+      <a class="btn-primary mb-8 w-full sm:mb-10 sm:w-auto" href="/#ubicacion">Cómo llegar al templo</a>
+
+      <div class="w-full border-t border-white/10 pt-6">
+        <p class="text-sm text-white/55">
+          © {new Date().getFullYear()} {church.name}. Todos los derechos reservados.
+        </p>
+        <p class="mt-2 text-sm text-white/45">
+          <a class="underline decoration-white/25 underline-offset-4 transition hover:text-gold-soft hover:decoration-gold-soft" href="/privacidad">
+            Política de Privacidad
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

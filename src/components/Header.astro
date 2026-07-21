@@ -1,0 +1,175 @@
+---
+import { church } from '../data/church';
+
+interface Props {
+  solid?: boolean;
+}
+
+const { solid = false } = Astro.props;
+
+const links = [
+  { href: '/#horarios', label: 'Horarios' },
+  { href: '/#nosotros', label: 'Nosotros' },
+  { href: '/#familia', label: 'Familia' },
+  { href: '/#actividades', label: 'Actividades' },
+  { href: '/#ubicacion', label: 'Ubicación' },
+];
+---
+
+<header
+  id="top"
+  class:list={[
+    'header fixed inset-x-0 top-0 z-40 h-16 transition-all duration-300 sm:h-[4.5rem]',
+    solid && 'is-scrolled bg-white/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-b border-slate-100/80',
+  ]}
+  data-header
+  data-solid={solid ? 'true' : undefined}
+>
+  <div class="container-page flex h-full items-center justify-between gap-3">
+    <a class="brand flex min-w-0 items-center gap-2.5 text-white sm:gap-3" href="/" aria-label={`${church.name} — inicio`}>
+      <img
+        class="h-9 w-9 shrink-0 rounded-full bg-white object-cover ring-2 ring-white/60 sm:h-11 sm:w-11"
+        src="/images/logo-iasd-pariachi.png"
+        alt=""
+        width="56"
+        height="56"
+      />
+      <span class="flex min-w-0 flex-col leading-tight">
+        <strong class="truncate font-display text-[0.95rem] font-bold sm:text-[1.05rem]">{church.name}</strong>
+        <small class="hidden text-[0.72rem] opacity-80 sm:block">Iglesia Adventista</small>
+      </span>
+    </a>
+
+    <button
+      class="nav-toggle z-20 flex h-10 w-10 flex-col items-center justify-center gap-1.5 border-0 bg-transparent lg:hidden"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="Abrir menú"
+      data-nav-toggle
+    >
+      <span class="block h-0.5 w-5 bg-white transition"></span>
+      <span class="block h-0.5 w-5 bg-white transition"></span>
+    </button>
+
+    <nav
+      id="site-nav"
+      class="nav pointer-events-none fixed inset-x-0 top-0 z-10 flex max-h-[100dvh] -translate-y-[120%] flex-col gap-1 overflow-y-auto overscroll-contain bg-white/95 px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-20 opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 lg:pointer-events-auto lg:static lg:max-h-none lg:translate-y-0 lg:flex-row lg:items-center lg:gap-4 lg:overflow-visible lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:backdrop-blur-none xl:gap-6"
+      aria-label="Principal"
+      data-nav
+    >
+      {
+        links.map((link) => (
+          <a
+            class="nav-link border-b border-slate-100 py-3.5 text-base font-semibold text-slate-800 transition hover:text-gold-deep lg:border-0 lg:py-0 lg:text-sm lg:text-white/90 lg:hover:text-gold-soft xl:text-[0.95rem]"
+            href={link.href}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        class="nav-cta btn-ghost-light mt-3 !w-full !px-5 !py-2.5 text-sm lg:mt-0 lg:!w-auto"
+        href="/#ubicacion"
+      >
+        Cómo llegar
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const nav = document.querySelector('[data-nav]');
+  const alwaysSolid = header?.getAttribute('data-solid') === 'true';
+  const desktopQuery = window.matchMedia('(min-width: 1024px)');
+
+  const onScroll = () => {
+    const scrolled = alwaysSolid || window.scrollY > 20;
+    header?.classList.toggle('is-scrolled', scrolled);
+    header?.classList.toggle('bg-white/80', scrolled);
+    header?.classList.toggle('backdrop-blur-md', scrolled);
+    header?.classList.toggle('shadow-[0_8px_30px_rgb(0,0,0,0.04)]', scrolled);
+    header?.classList.toggle('border-b', scrolled);
+    header?.classList.toggle('border-slate-100/80', scrolled);
+  };
+
+  const closeNav = () => {
+    nav?.classList.remove('is-open', 'translate-y-0', 'opacity-100', 'pointer-events-auto');
+    nav?.classList.add('-translate-y-[120%]', 'opacity-0', 'pointer-events-none');
+    if (desktopQuery.matches) {
+      nav?.classList.remove('-translate-y-[120%]', 'opacity-0', 'pointer-events-none');
+      nav?.classList.add('opacity-100', 'pointer-events-auto');
+    }
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('overflow-hidden');
+  };
+
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('is-open');
+    nav?.classList.toggle('translate-y-0', !!open);
+    nav?.classList.toggle('opacity-100', !!open);
+    nav?.classList.toggle('pointer-events-auto', !!open);
+    nav?.classList.toggle('-translate-y-[120%]', !open);
+    nav?.classList.toggle('opacity-0', !open);
+    nav?.classList.toggle('pointer-events-none', !open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('overflow-hidden', !!open && !desktopQuery.matches);
+  });
+
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => closeNav());
+  });
+
+  desktopQuery.addEventListener('change', () => {
+    if (desktopQuery.matches) {
+      document.body.classList.remove('overflow-hidden');
+      closeNav();
+    }
+  });
+</script>
+
+<style>
+  .header.is-scrolled .brand {
+    color: #0f172a;
+  }
+
+  .header.is-scrolled .nav-link {
+    color: #1e293b;
+  }
+
+  .header.is-scrolled .nav-link:hover {
+    color: #9a7628;
+  }
+
+  .header.is-scrolled .nav-cta {
+    color: #334155;
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .header.is-scrolled .nav-cta:hover {
+    color: #0f172a;
+    border-color: #94a3b8;
+    background: #f1f5f9;
+    box-shadow: 0 10px 15px -3px rgb(226 232 240 / 0.5);
+  }
+
+  .header.is-scrolled .nav-toggle span {
+    background: #0f172a;
+  }
+
+  @media (min-width: 1024px) {
+    .nav {
+      transform: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+  }
+</style>

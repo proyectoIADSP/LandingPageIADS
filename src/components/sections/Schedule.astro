@@ -1,0 +1,121 @@
+---
+import { church } from '../../data/church';
+---
+
+<section class="section-pad relative overflow-hidden bg-slate-50" id="horarios">
+  <div class="pointer-events-none absolute top-0 left-1/4 h-96 w-96 rounded-full bg-yellow-300/10 blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-blue-300/10 blur-3xl" aria-hidden="true"></div>
+  <div class="container-page relative">
+    <div class="reveal mx-auto mb-12 max-w-2xl text-center">
+      <p class="section-kicker justify-center">
+        {church.sections.schedule.kicker}
+      </p>
+      <h2 class="section-title italic">
+        {church.sections.schedule.title}
+      </h2>
+      <p class="section-lead">
+        {church.sections.schedule.lead}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 items-stretch gap-5 sm:gap-6 md:grid-cols-3">
+      {
+        church.schedule.map((block, index) => (
+          <article
+            class="group surface-card reveal flex flex-col"
+            style={`transition-delay: ${index * 90}ms`}
+            data-schedule-card
+          >
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img
+                class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                src={block.image}
+                alt={`${block.day}: ${block.subtitle}`}
+                width="800"
+                height="520"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-navy-deep/85 via-navy-deep/30 to-transparent px-4 pb-5 text-center">
+                <span class="font-display text-sm text-gold-soft italic">{block.subtitle}</span>
+                <h3 class="font-ceremony text-xl font-bold tracking-[0.08em] text-white uppercase md:text-2xl">
+                  {block.day}
+                </h3>
+              </div>
+            </div>
+
+            <div class="flex flex-1 flex-col gap-4 p-5 text-center md:p-6">
+              <ul class="m-0 grid list-none gap-3 p-0">
+                {block.items.map((item) => (
+                  <li class="rounded-xl bg-slate-50/80 px-3 py-3 ring-1 ring-inset ring-slate-100">
+                    <span class="mb-1 block text-sm text-slate-600">{item.name}</span>
+                    <time class="title-gold font-display text-xl font-bold italic">{item.time}</time>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="schedule-panel" data-panel aria-hidden="true">
+                <div class="schedule-panel__inner">
+                  <div class="rounded-xl border border-slate-100 bg-slate-50 p-3 text-left">
+                    <p class="m-0 text-sm leading-relaxed text-slate-600">{block.about}</p>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn-secondary mt-auto w-full !py-2.5 !text-sm"
+                data-more
+                aria-expanded="false"
+              >
+                Ver más
+              </button>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .schedule-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .schedule-panel.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  .schedule-panel__inner {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.35s ease 0.05s,
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .schedule-panel.is-open .schedule-panel__inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-schedule-card]').forEach((card) => {
+    const btn = card.querySelector('[data-more]');
+    const panel = card.querySelector('[data-panel]');
+    if (!(btn instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      const next = !open;
+      btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+      btn.textContent = next ? 'Ver menos' : 'Ver más';
+      panel.classList.toggle('is-open', next);
+      panel.setAttribute('aria-hidden', next ? 'false' : 'true');
+    });
+  });
+</script>

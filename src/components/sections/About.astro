@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import { church } from '../../data/church';
+import congregacion from '../../assets/Nosotros_iglesiapariachi.jpg';
+---
+
+<section class="section-pad relative overflow-hidden bg-slate-50" id="nosotros">
+  <div class="pointer-events-none absolute top-0 left-1/4 h-96 w-96 rounded-full bg-yellow-300/10 blur-3xl" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-blue-300/10 blur-3xl" aria-hidden="true"></div>
+
+  <div class="container-page relative">
+    <div class="reveal mx-auto mb-10 max-w-2xl text-center">
+      <p class="section-kicker justify-center">
+        {church.sections.about.kicker}
+      </p>
+      <h2 class="section-title mb-4">
+        {church.sections.about.title}
+      </h2>
+      <p class="text-pretty text-sm text-slate-600 sm:text-base md:text-lg">
+        Somos la familia de la {church.name}: una comunidad de fe en {church.location}.
+      </p>
+    </div>
+
+    <div class="group surface-card reveal mb-6 sm:mb-8">
+      <div class="relative overflow-hidden">
+        <Image
+          src={congregacion}
+          alt={`Familia de la ${church.name}`}
+          widths={[480, 720, 1080, 1440, 1920]}
+          sizes="(max-width: 640px) 100vw, (max-width: 1120px) 100vw, 1120px"
+          quality={90}
+          class="h-auto max-h-[52vh] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 sm:max-h-none"
+        />
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep/70 via-navy-deep/20 to-transparent px-4 pb-4 pt-14 sm:px-5 sm:pb-5 sm:pt-16 md:px-8 md:pb-6">
+          <p class="font-display text-base text-white italic sm:text-lg md:text-xl">
+            Nuestra familia en {church.location}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal relative z-10 mx-auto -mt-1 grid max-w-5xl gap-4 sm:gap-5 md:-mt-10 md:grid-cols-[1.15fr_0.85fr]">
+      <article class="surface-card p-5 sm:p-6 md:p-8">
+        <div class="mb-5 flex items-center gap-3">
+          <span class="h-10 w-1.5 shrink-0 rounded-full bg-gold"></span>
+          <p class="font-ceremony text-[0.65rem] font-semibold tracking-[0.16em] text-gold-deep uppercase sm:text-xs sm:tracking-[0.18em]">
+            Una invitación para ti
+          </p>
+        </div>
+
+        <p class="mb-6 font-display text-lg leading-snug font-semibold tracking-tight text-pretty text-slate-900 sm:text-xl md:text-2xl">
+          {church.invitation}
+        </p>
+
+        <blockquote class="mb-6 rounded-2xl border border-gold/20 bg-gradient-to-br from-gold-soft/70 to-white/90 p-4 ring-1 ring-inset ring-white/50 sm:p-5 md:p-6">
+          <p class="mb-3 font-display text-base leading-relaxed text-navy italic sm:text-lg md:text-xl">
+            “{church.verse.text}”
+          </p>
+          <cite class="font-ceremony text-[0.65rem] font-semibold tracking-[0.14em] text-gold-deep uppercase not-italic sm:text-xs sm:tracking-[0.16em]">
+            {church.verse.reference}
+          </cite>
+        </blockquote>
+
+        <p class="mb-7 text-sm leading-relaxed text-pretty text-slate-600 sm:text-base">
+          En la IASD Pariachi creemos que la iglesia no es solo un edificio: es la casa de Dios, un hogar espiritual donde cada persona puede orar, aprender y caminar con Jesús en comunidad.
+        </p>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a class="btn-primary" href={church.beliefsUrl} target="_blank" rel="noopener noreferrer">
+            {church.beliefsLabel}
+          </a>
+          <a class="btn-secondary" href="#horarios">Ver horarios</a>
+        </div>
+      </article>
+
+      <aside class="grid gap-4">
+        {
+          church.highlights.map((item) => (
+            <div class="group surface-card p-5">
+              <div class="mb-3 flex items-center gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-soft font-ceremony text-sm font-bold text-gold-deep transition-transform duration-300 group-hover:scale-105">
+                  {item.title.charAt(0)}
+                </span>
+                <h3 class="font-display text-lg font-bold text-slate-900">{item.title}</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-slate-600">{item.text}</p>
+            </div>
+          ))
+        }
+
+        <div class="relative overflow-hidden rounded-2xl bg-navy-deep p-5 text-white shadow-[0_8px_30px_rgb(0,0,0,0.08)] ring-1 ring-inset ring-white/10 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.16)]">
+          <p class="mb-2 font-ceremony text-[0.7rem] font-semibold tracking-[0.18em] text-gold-soft uppercase">
+            Bienvenido a casa
+          </p>
+          <p class="mb-4 font-display text-lg leading-snug">
+            Aquí hay un lugar para ti, tu familia y tu fe.
+          </p>
+          <a class="btn-primary w-full" href="#ubicacion">Visítanos este sábado</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

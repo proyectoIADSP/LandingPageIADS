@@ -1,0 +1,92 @@
+---
+import { church, whatsappLink, activeSocials } from '../../data/church';
+
+const socials = activeSocials();
+---
+
+<section class="section-pad relative overflow-hidden bg-gradient-to-b from-white to-slate-50" id="ubicacion">
+  <div class="pointer-events-none absolute top-0 left-1/4 h-64 w-64 rounded-full bg-yellow-300/10 blur-3xl sm:h-96 sm:w-96" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute right-1/4 bottom-0 h-64 w-64 rounded-full bg-blue-300/10 blur-3xl sm:h-96 sm:w-96" aria-hidden="true"></div>
+  <div class="container-page relative">
+    <div class="reveal mb-8 max-w-2xl sm:mb-10">
+      <p class="section-kicker !justify-start">
+        {church.sections.contact.kicker}
+      </p>
+      <h2 class="section-title">
+        {church.sections.contact.title}
+      </h2>
+      <p class="max-w-xl text-pretty text-sm text-slate-600 sm:text-base">
+        Estamos en {church.location}. Será un gusto recibirte en casa.
+      </p>
+    </div>
+
+    <div class="grid items-stretch gap-5 sm:gap-6 lg:grid-cols-2">
+      <article class="surface-card reveal flex flex-col p-5 sm:p-6 md:p-8">
+        <div class="mb-5 overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 ring-1 ring-inset ring-white/70 sm:mb-6 sm:p-5">
+          <div class="mb-3 flex items-center gap-3">
+            <span class="h-8 w-1 shrink-0 rounded-full bg-gold"></span>
+            <p class="font-ceremony text-[0.7rem] font-semibold tracking-[0.16em] text-gold-deep uppercase">
+              Dirección
+            </p>
+          </div>
+          <p class="mb-1 font-display text-lg font-bold break-words text-slate-900 sm:text-xl md:text-2xl">{church.address}</p>
+          <p class="text-sm text-slate-600">{church.addressDetail}</p>
+        </div>
+
+        <div class="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:flex-wrap">
+          <a
+            class="btn-primary"
+            href={church.mapsDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Cómo llegar
+          </a>
+          <a
+            class="btn-secondary"
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Escribir por WhatsApp
+          </a>
+        </div>
+
+        {
+          socials.length > 0 && (
+            <div class="mt-auto border-t border-slate-100 pt-5 sm:pt-6">
+              <p class="mb-3 font-ceremony text-[0.7rem] font-semibold tracking-[0.16em] text-slate-500 uppercase">
+                Síguenos
+              </p>
+              <div class="flex flex-wrap gap-2">
+                {socials.map((social) => (
+                  <a
+                    class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-gold-soft/50"
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {social.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
+      </article>
+
+      <div class="surface-card reveal overflow-hidden p-1.5 sm:p-2">
+        <div class="overflow-hidden rounded-xl">
+          <iframe
+            class="block aspect-[4/3] w-full border-0 sm:aspect-auto sm:min-h-[380px] md:min-h-[440px]"
+            title={`Mapa de ${church.name}`}
+            src={church.mapEmbedUrl}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
