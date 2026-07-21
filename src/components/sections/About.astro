@@ -1,7 +1,23 @@
 ---
 import { Image } from 'astro:assets';
 import { church } from '../../data/church';
-import congregacion from '../../assets/Nosotros_iglesiapariachi.jpg';
+import nosotrosPrincipal from '../../assets/Nosotros_iglesiapariachi.jpg';
+import nosotros1 from '../../assets/nosotros 1.jpeg';
+import nosotros2 from '../../assets/nosotros 2.jpeg';
+import nosotros3 from '../../assets/nosotros 3.jpeg';
+import nosotros4 from '../../assets/nosotros 4.jpeg';
+import nosotros5 from '../../assets/nosotros 5.jpeg';
+import nosotros6 from '../../assets/nosotros 6.jpeg';
+
+const gallery = [
+  { src: nosotrosPrincipal, alt: `Familia de la ${church.name}` },
+  { src: nosotros1, alt: `Congregación de la ${church.name} — momento 1` },
+  { src: nosotros2, alt: `Congregación de la ${church.name} — momento 2` },
+  { src: nosotros3, alt: `Congregación de la ${church.name} — momento 3` },
+  { src: nosotros4, alt: `Congregación de la ${church.name} — momento 4` },
+  { src: nosotros5, alt: `Congregación de la ${church.name} — momento 5` },
+  { src: nosotros6, alt: `Congregación de la ${church.name} — momento 6` },
+];
 ---
 
 <section class="section-pad relative overflow-hidden bg-slate-50" id="nosotros">
@@ -21,21 +37,88 @@ import congregacion from '../../assets/Nosotros_iglesiapariachi.jpg';
       </p>
     </div>
 
-    <div class="group surface-card reveal mb-6 sm:mb-8">
-      <div class="relative overflow-hidden">
-        <Image
-          src={congregacion}
-          alt={`Familia de la ${church.name}`}
-          widths={[480, 720, 1080, 1440, 1920]}
-          sizes="(max-width: 640px) 100vw, (max-width: 1120px) 100vw, 1120px"
-          quality={90}
-          class="h-auto max-h-[52vh] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 sm:max-h-none"
-        />
-        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep/70 via-navy-deep/20 to-transparent px-4 pb-4 pt-14 sm:px-5 sm:pb-5 sm:pt-16 md:px-8 md:pb-6">
-          <p class="font-display text-base text-white italic sm:text-lg md:text-xl">
-            Nuestra familia en {church.location}
-          </p>
-        </div>
+    <div
+      class="reveal group relative mb-6 aspect-[16/10] overflow-hidden rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:mb-8 sm:aspect-[21/9]"
+      data-about-carousel
+      role="region"
+      aria-roledescription="carrusel"
+      aria-label={`Galería de la ${church.name}`}
+    >
+      {
+        gallery.map((photo, index) => (
+          <div
+            class:list={[
+              'absolute inset-0 transition-opacity duration-1000 ease-in-out',
+              index === 0 ? 'opacity-100 z-[1]' : 'opacity-0 z-0',
+            ]}
+            data-about-slide
+            aria-hidden={index === 0 ? 'false' : 'true'}
+          >
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[480, 720, 1080, 1440, 1920]}
+              sizes="(max-width: 640px) 100vw, (max-width: 1120px) 100vw, 1120px"
+              quality={90}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              class="h-full w-full object-cover"
+            />
+          </div>
+        ))
+      }
+
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-navy-deep/70 via-navy-deep/20 to-transparent px-4 pb-12 pt-16 sm:px-5 sm:pb-14 sm:pt-20 md:px-8"
+        aria-hidden="true"
+      >
+        <p class="font-display text-base text-white italic sm:text-lg md:text-xl">
+          Nuestra familia en {church.location}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="absolute top-1/2 left-3 z-[3] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white opacity-70 backdrop-blur-md transition-all duration-300 hover:bg-white/30 hover:opacity-100 focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:left-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100"
+        data-about-prev
+        aria-label="Foto anterior"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        class="absolute top-1/2 right-3 z-[3] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white opacity-70 backdrop-blur-md transition-all duration-300 hover:bg-white/30 hover:opacity-100 focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:right-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100"
+        data-about-next
+        aria-label="Foto siguiente"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+
+      <div
+        class="absolute inset-x-0 bottom-4 z-[3] flex items-center justify-center gap-2 sm:bottom-5"
+        data-about-dots
+        role="tablist"
+        aria-label="Seleccionar foto"
+      >
+        {
+          gallery.map((_, index) => (
+            <button
+              type="button"
+              class:list={[
+                'h-2 w-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy-deep',
+                index === 0 ? 'scale-125 bg-gold' : 'bg-white/40 hover:bg-white/70',
+              ]}
+              data-about-dot={index}
+              aria-label={`Ir a la foto ${index + 1}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              role="tab"
+            />
+          ))
+        }
       </div>
     </div>
 
@@ -101,3 +184,88 @@ import congregacion from '../../assets/Nosotros_iglesiapariachi.jpg';
     </div>
   </div>
 </section>
+
+<script>
+  function initAboutCarousel() {
+    const root = document.querySelector('[data-about-carousel]');
+    if (!(root instanceof HTMLElement) || root.dataset.ready === '1') return;
+    root.dataset.ready = '1';
+
+    const slides = Array.from(root.querySelectorAll('[data-about-slide]'));
+    const dots = Array.from(root.querySelectorAll('[data-about-dot]'));
+    const prevBtn = root.querySelector('[data-about-prev]');
+    const nextBtn = root.querySelector('[data-about-next]');
+    if (slides.length < 2) return;
+
+    let index = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const INTERVAL_MS = 4000;
+
+    function show(next: number) {
+      index = (next + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        const active = i === index;
+        slide.classList.toggle('opacity-100', active);
+        slide.classList.toggle('z-[1]', active);
+        slide.classList.toggle('opacity-0', !active);
+        slide.classList.toggle('z-0', !active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+
+      dots.forEach((dot, i) => {
+        const active = i === index;
+        dot.classList.toggle('bg-gold', active);
+        dot.classList.toggle('scale-125', active);
+        dot.classList.toggle('bg-white/40', !active);
+        dot.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function start() {
+      stop();
+      timer = setInterval(() => show(index + 1), INTERVAL_MS);
+    }
+
+    function goTo(next: number) {
+      show(next);
+      start();
+    }
+
+    prevBtn?.addEventListener('click', () => goTo(index - 1));
+    nextBtn?.addEventListener('click', () => goTo(index + 1));
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        goTo(Number(dot.getAttribute('data-about-dot') || 0));
+      });
+    });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', (event) => {
+      if (!root.contains(event.relatedTarget as Node | null)) start();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    start();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAboutCarousel);
+  } else {
+    initAboutCarousel();
+  }
+</script>
