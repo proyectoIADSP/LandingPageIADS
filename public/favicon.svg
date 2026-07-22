@@ -1,11 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
-  <rect width="120" height="120" rx="24" fill="#003B5C"/>
-  <g transform="translate(0 10)">
-    <path d="M16 58c0-27 19-46 44-46s44 19 44 46" stroke="#F5EDD8" stroke-width="3" stroke-linecap="round"/>
-    <path d="M46 54C43 42 48 31 56 22c.8 8 4.5 13.5 10 17-8.5 1.5-15.5 7-20 15z" fill="#B58E33"/>
-    <path d="M60 24c3.5 8.5 4.5 17 2.5 25 7.5-4.5 12.5-12 14.5-21-7 .8-12-1.2-17-4z" fill="#C9A24A"/>
-    <path d="M74 54c3-12-2-23-10-32-.8 8-4.5 13.5-10 17 8.5 1.5 15.5 7 20 15z" fill="#B58E33"/>
-    <path d="M26 58c11 4.5 23 7.5 34 7.5S83 62.5 94 58v9c-11 5.5-23 9.5-34 9.5S37 72.5 26 67v-9z" fill="#F5EDD8"/>
-    <path d="M60 50v24" stroke="#003B5C" stroke-width="2.5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Fondo -->
+  <rect width="128" height="128" rx="28" fill="#FFFFFF"/>
+  <!-- Emblema oficial IASD: arco, llama, Biblia abierta y cruz -->
+  <g transform="translate(4 8)">
+    <!-- Arco -->
+    <path
+      d="M20 66c0-30 21-51 44-51s44 21 44 51"
+      stroke="#003B5C"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <!-- Llama izquierda -->
+    <path
+      d="M48 62C44.5 48 50 35 59 24c1 9 5 15.5 11.5 19.5C61 45.5 53 52 48 62z"
+      fill="#B58E33"
+    />
+    <!-- Llama centro -->
+    <path
+      d="M64 26c4 9.5 5 19 2.8 28 8.5-5 14-13.5 16.2-23.5-7.8.9-13.5-1.4-19-4.5z"
+      fill="#C9A24A"
+    />
+    <!-- Llama derecha -->
+    <path
+      d="M80 62c3.5-13.5-2-26-11.5-36-1 9-5 15.5-11.5 19.5C66.5 47.5 74.5 54 80 62z"
+      fill="#B58E33"
+    />
+    <!-- Biblia abierta -->
+    <path
+      d="M28 66c12.5 5 26 8.5 36 8.5S87.5 71 100 66v11c-12.5 6-26 10.5-36 10.5S40.5 83 28 77V66z"
+      fill="#003B5C"
+    />
+    <!-- Cruz -->
+    <path
+      d="M64 56v30"
+      stroke="#FFFFFF"
+      stroke-width="3.5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M56 70h16"
+      stroke="#FFFFFF"
+      stroke-width="3.5"
+      stroke-linecap="round"
+    />
   </g>
 </svg>
