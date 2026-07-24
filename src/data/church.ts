@@ -136,7 +136,7 @@ export const churchData: ChurchData = {
   ],
   beliefsUrl: 'https://institucional.adventistas.org/es/nuestras-crencias/',
   beliefsLabel: 'Conoce las 28 creencias fundamentales',
-  address: 'C. F Mz.B - Lt.27, Ate 15476',
+  address: 'Mz B lote 28, Pariachi 3ra etapa',
   addressDetail: 'Pariachi, Ate — Lima, Perú. Usa “Cómo llegar” para abrir la ruta en Google Maps.',
   coordinates,
   whatsapp: '51999999999',
