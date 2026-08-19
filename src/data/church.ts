@@ -139,7 +139,7 @@ export const churchData: ChurchData = {
   address: 'Mz B lote 28, Pariachi 3ra etapa',
   addressDetail: 'Pariachi, Ate — Lima, Perú. Usa “Cómo llegar” para abrir la ruta en Google Maps.',
   coordinates,
-  whatsapp: '51999999999',
+  whatsapp: '51930120788',
   whatsappMessage: 'Hola, quisiera más información sobre la IASD Pariachi.',
   mapEmbedUrl: `https://maps.google.com/maps?q=${coordinates.lat},${coordinates.lng}&hl=es&z=17&output=embed`,
   mapsDirectionsUrl: 'https://maps.app.goo.gl/bzsQgEatbeYoHgWH8',
